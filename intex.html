@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Story Details</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Customize Your Story</h1>
+        
+        <form id="storyDetailsForm">
+            <label for="yourProfession">Your Profession:</label>
+            <input type="text" id="yourProfession" name="yourProfession" placeholder="Enter your profession">
+
+            <label for="partnerProfession">Partner's Profession:</label>
+            <input type="text" id="partnerProfession" name="partnerProfession" placeholder="Enter your partner's profession">
+
+            <label for="location">Where are you settling?:</label>
+            <input type="text" id="location" name="location" placeholder="Enter the place">
+
+            <label for="whenWeMet">When did you meet?:</label>
+            <input type="text" id="whenWeMet" name="whenWeMet" placeholder="Describe when you met">
+
+            <label for="howStoryEnds">How does your story end?:</label>
+            <input type="text" id="howStoryEnds" name="howStoryEnds" placeholder="How does the story end?">
+
+            <button type="submit">Generate Story</button>
+        </form>
+
+        <!-- Output Section -->
+        <div id="storyOutput">
+            <h2>Your Generated Story:</h2>
+            <p id="storyText"></p>
+        </div>
+    </div>
+
+    <script>
+        // Get genre from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const genre = urlParams.get('genre');
+        
+        // Display genre in the form (optional)
+        document.querySelector("h1").innerHTML = `Customize Your ${genre.charAt(0).toUpperCase() + genre.slice(1)} Story`;
+
+        // Handle the form submission
+        document.getElementById('storyDetailsForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const yourProfession = document.getElementById('yourProfession').value;
+            const partnerProfession = document.getElementById('partnerProfession').value;
+            const location = document.getElementById('location').value;
+            const whenWeMet = document.getElementById('whenWeMet').value;
+            const howStoryEnds = document.getElementById('howStoryEnds').value;
+
+            const story = generateStory(genre, yourProfession, partnerProfession, location, whenWeMet, howStoryEnds);
+            document.getElementById('storyText').innerHTML = story;
+        });
+
+        // Generate the story based on selected details
+        function generateStory(genre, yourProfession, partnerProfession, location, whenWeMet, howStoryEnds) {
+            let story = `In a ${genre} world, you and your partner, a ${partnerProfession}, decided to settle in ${location}.<br><br>`;
+            
+            if (genre === 'romantic') {
+                story += `You both met ${whenWeMet}, and your love story flourished. The future is bright, and your journey together promises everlasting love. <br><br>`;
+            } else if (genre === 'mafia') {
+                story += `Your paths crossed under intense circumstances, and your love blossomed amid danger and betrayal. Your shared life in ${location} is full of challenges and victories. <br><br>`;
+            } else if (genre === 'horror') {
+                story += `The eerie meeting of souls started in the shadows. Strange things have happened ever since, and your love story has its share of chilling twists. <br><br>`;
+            } else if (genre === 'crime') {
+                story += `In a life filled with crime, your bond has been tested by dangerous events. You and your partner must navigate the perils of your chosen life while keeping your love alive. <br><br>`;
+            } else if (genre === 'fantasy') {
+                story += `In a land of mythical creatures, your professions as a ${yourProfession} and ${partnerProfession} intertwine magically. Your love is legendary in the enchanted realm of ${location}.<br><br>`;
+            }
+            
+            story += `And your story ends with: ${howStoryEnds}.<br><br>`;
+            
+            return story;
+        }
+    </script>
+</body>
+</html>
